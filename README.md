@@ -19,16 +19,6 @@ This skill uses fresh agents as crash-test dummies to detect failures in informa
 
 Create validation questions.  
 Only you know the subtle context, multi-turn nuance, and implicit agreements that may not have been fully captured in the document.
-
-Question types:
-
-- **Reconstruction**: "What are the core decisions of this project, and why?"
-- **Boundary**: "Where is the line between what is included and what is excluded?"
-- **Priority**: "What happens if A and B conflict?"
-- **Counterfactual**: "What changes if constraint X changes?"
-- **Trap**: Questions whose correct answer is "This is not in the document"
-- **Subtle questions**
-
 Trap and subtle questions must be included. If the reader invents an answer, that means they relied on training priors rather than the document.
 
 For complex documents, it can help to organize an **intent packet** before designing questions, so you can more consciously notice what might be missing:

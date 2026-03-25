@@ -1,4 +1,3 @@
-//copy this and save as SKILL.md then use it
 ---
 name: docs-verify
 description: Verifies, through independent sub-agents, whether a written document accurately conveys the intended meaning even without the original conversation context. Trigger this after writing documents such as multi-turn conversation summaries, handoff docs, onboarding materials, sub-agent task instructions, project briefs, and similar materials.

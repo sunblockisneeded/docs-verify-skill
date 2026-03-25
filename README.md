@@ -18,6 +18,7 @@ This skill uses fresh agents as crash-test dummies to detect failures in informa
 ### Step 1: Write validation questions
 
 Create validation questions.  
+Try to find facts that are implicitly assumed but not explicitly stated in the document by referring back and forth between the document and the conversation sessions.
 Only you know the subtle context, multi-turn nuance, and implicit agreements that may not have been fully captured in the document.
 Trap and subtle questions must be included. If the reader invents an answer, that means they relied on training priors rather than the document.
 

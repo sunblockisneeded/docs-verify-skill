@@ -1,6 +1,6 @@
 ---
 name: docs-verify
-description: "Verifies whether a document conveys its intended meaning to readers who lack the original conversational context, using an independent subagent. Trigger right after writing any document that a context-less executor will act on — handoffs, onboarding materials, subagent task instructions, project directives, multi-turn conversation summaries, README files."
+description: "Verifies whether a document conveys its intended meaning to readers who lack the original conversational context, using an independent subagent. Trigger right after writing any document that a context-less executor will act on — handoffs, onboarding materials, subagent task instructions, project directives, multi-turn conversation summaries, internal project READMEs."
 ---
 
 ## Why this matters

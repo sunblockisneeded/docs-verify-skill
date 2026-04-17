@@ -1,54 +1,34 @@
 ---
 name: docs-verify
-description: Verifies, through independent sub-agents, whether a written document accurately conveys the intended meaning even without the original conversation context. Trigger this after writing documents such as multi-turn conversation summaries, handoff docs, onboarding materials, sub-agent task instructions, project briefs, and similar materials.
+description: "Verifies whether a document conveys its intended meaning to readers who lack the original conversational context, using an independent subagent. Trigger right after writing any document that a context-less executor will act on — handoffs, onboarding materials, subagent task instructions, project directives, multi-turn conversation summaries, README files."
 ---
 
-# docs-verify
+## Why this matters
 
-Tests whether an independent reader can reconstruct the same **decision boundaries** from your document — not whether the writing is smooth, but whether someone acting solely on this document will think the way you do and make the same decisions.
+LLMs are known to have strong comprehension but weaker expressive precision. When an LLM organizes a document, it tends to write under the implicit premise of a reader who already shares the session's accumulated context and information — not the fresh human or agent who will actually deep-dive into the project by reading "the document + project files." This tendency is strong and well-documented.
 
-## Why this is needed
+Therefore, an independent agent must verify: "does this document actually transfer the information I intend to transfer?"
 
-LLMs are known to be strong at understanding but weaker at expression. Documents organized by an LLM tend to be written with heavy reliance on the many contextual assumptions and background information already shared by the existing user or across prior sessions, rather than sufficiently accounting for a new reader who must understand the project by reading the document alone.
+The author cannot detect omissions by re-reading their own document, because they already hold the context. **Self-verification is structurally invalid.**
 
-This skill uses fresh agents as crash-test dummies to detect failures in information transfer and iteratively improve the document.
+What we verify is not prose fluency, but whether someone acting on the document alone forms the same thinking as you — whether they reconstruct the same **decision boundaries**.
 
-## Workflow
+## 1. Probe design
 
-### Step 1: Write validation questions
+Only you, the author, know the implicit agreements that may not have made it into the document. Generate questions that verify not just the explicit facts to be conveyed, but whether tacit knowledge and context got through.
 
-Create validation questions.  
-Try to find facts that are implicitly assumed but not explicitly stated in the document by referring back and forth between the document and the conversation sessions.
-Only you know the subtle context, multi-turn nuance, and implicit agreements that may not have been fully captured in the document.
-Trap and subtle questions must be included. If the reader invents an answer, that means they relied on training priors rather than the document.
+Freely mix reconstruction, boundary, priority, counterfactual, trap, and tacit-knowledge questions.
 
-For complex documents, it can help to organize an **intent packet** before designing questions, so you can more consciously notice what might be missing:
+For complex documents, organize an intent packet before designing probes: goals/non-goals, constraints and priority ordering, term definitions, positive and negative examples, decision rules. Construct probes densely and strictly.
 
-Goal / non-goals / constraints / priority order / term definitions  
-Assumptions and unknowns / examples that qualify and examples that do not / failure modes  
-Decision rules ("If X and Y conflict, choose X")
+## 2. Blind receiver test
 
-### Step 2: Blind recipient test
+Send document + probes to a **fresh agent with zero session context**. Asking an agent within the same session shares the context and invalidates the test itself. Default: a single lightweight model (Sonnet/Flash). On failure, retry with Opus/Pro to determine whether it is a model limitation or the document's failure to transfer context and information properly.
 
-Send the document + probes to a fresh agent **with no session context**.  
-Use at least 2 recipients, and ideally models of different capability levels:
+## 3. Evaluation and iteration
 
-- **Recipient A** (e.g. Opus/pro): responds to the probes
-- **Recipient B** (e.g. Sonnet/flash): independently responds to the same probes
+**You** evaluate. Not a score — focus on **where it diverged**. Pass threshold: trap questions passed, boundary/tacit-knowledge questions answered via citation from the document. If it falls short, revise the document and retest **with a new session and new probes** (reusing prior probes overfits the document to the test).
 
-Check whether there is a performance gap between a frontier model like Opus/pro and a lighter model.  
-If a lighter model such as Sonnet or Flash is inaccurate, you should suspect that the document is not sufficiently robust.  
-That said, in such cases you should examine whether the gap comes from the document’s explanation quality or simply from differences in model capability, and you may ask additional questions to agents within the same session.
+## CRITICAL — no reward hacking
 
-### Step 3: Evaluate + revise the document ITERATIVELY
-
-You evaluate the returned answers. Focus not on the score, but on **where the interpretations diverged**.  
-Synthesize multiple evaluation factors, then either improve the document or end the verification.
-
-However, for an ITERATED document, you must restart from Step 2 using a **new agent session**.  
-If you reuse the previous probes, the document will overfit to the test.
-
-#### **CRITICAL** when revising the document
-
-- When the expected answer was B but the agent answered A, LLMs have a very strong tendency to revise the document by writing something like "It is not A, it is B."
-- This is REWARD HACKING and must **never** be done. Improve the **quality of the document’s information transfer itself**.
+What needs revision is not the surface wrong answer, but the transfer quality that produced it. When the expected answer is B and the receiver answers A, LLMs have a very strong tendency to append "it's B, not A" to the document body. That is only patching the test. Build a document that improves the fundamental quality of explanation and information transfer — not a document that passes the test.

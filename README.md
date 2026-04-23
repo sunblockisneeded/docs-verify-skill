@@ -31,4 +31,4 @@ Send document + probes to a **fresh agent with zero session context**. Asking an
 
 ## CRITICAL — no reward hacking
 
-What needs revision is not the surface wrong answer, but the transfer quality that produced it. When the expected answer is B and the receiver answers A, LLMs have a very strong tendency to append "it's B, not A" to the document body. That is only patching the test. Build a document that improves the fundamental quality of explanation and information transfer — not a document that passes the test.
+What needs revision is not the surface wrong answer, but the transfer quality that produced it. When the expected answer is B and the receiver answers A, LLMs have a very strong tendency to append "it's B, not A" to the document body. **NEVER DO THIS**. That is only patching the test. Build a document that improves the fundamental quality of explanation and information transfer — not a document that passes the test.

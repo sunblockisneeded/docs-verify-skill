@@ -27,7 +27,7 @@ Send document + probes to a **fresh agent with zero session context**. Asking an
 
 ## 3. Evaluation and iteration
 
-**You** evaluate. Not a score — focus on **where it diverged**. Pass threshold: trap questions passed, boundary/tacit-knowledge questions answered via citation from the document. If it falls short, revise the document and retest **with a new session and new probes** (reusing prior probes overfits the document to the test).
+**You** evaluate. Not a score — focus on **where it diverged**. Pass threshold: trap questions passed, boundary/tacit-knowledge questions answered via citation from the document. If it falls short, revise the document and retest **with a new session**.
 
 ## CRITICAL — no reward hacking
 
